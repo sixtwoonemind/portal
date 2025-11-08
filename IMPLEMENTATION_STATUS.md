@@ -81,9 +81,11 @@ All 5 passkey authentication endpoints deployed to `f/portal/auth/` namespace:
 ## In Progress 🔄
 
 ### Frontend Integration
-Need to wire up frontend to backend endpoints:
-- [ ] Update `auth.js` API_BASE_URL to point to Windmill webhooks
-- [ ] Configure Windmill webhooks for each endpoint
+- [x] **Frontend Wiring Complete** ([auth.js](auth.js))
+  - API_BASE_URL: `https://viento.dev.sixtwoone.net/api/w/sixtwoonemind/jobs/run/p/f/portal_auth`
+  - Supabase credentials: ax-pv1 project (url + anon key)
+  - All 5 endpoints mapped to Windmill webhooks
+  - Request bodies include Supabase config for all API calls
 - [ ] Test registration flow end-to-end
 - [ ] Test authentication flow end-to-end
 - [ ] Test sign-out flow
@@ -93,7 +95,9 @@ Need to wire up frontend to backend endpoints:
 - **Deno Import Syntax**: Requires `npm:` prefix (e.g., `import { x } from "npm:@package@version"`)
 - **Critical**: Using wrong import syntax causes lockfile generation failures
 - **Windmill CLI Workflow**: `bootstrap` → write code → `generate-metadata` → `sync push`
-- **Selective Sync**: Use `--includes 'f/portal/**'` to push only specific namespaces
+- **Selective Sync**: Use `--includes 'f/portal_auth/**'` to push only specific namespaces
+- **Windmill Folders**: No nested folder support - use flat structure (e.g., `f/portal_auth/` not `f/portal/auth/`)
+- **Windmill Webhooks**: Scripts accessible at `/api/w/{workspace}/jobs/run/p/{path}/{script_name}`
 
 ## Pending 📋
 
@@ -164,9 +168,14 @@ portal/
 - **Supabase**: ax-pv1 project (`idepddaqucsdrnsjctke.supabase.co`)
 
 ## Next Steps
-1. Configure Windmill webhooks for all 5 passkey endpoints
-2. Wire frontend to backend (update API_BASE_URL in auth.js)
-3. Test complete authentication flow end-to-end
-4. Configure cross-subdomain session sharing
-5. Deploy portal to production (sixtwoonemind.com)
-6. Deploy backend API routes (api.sixtwoonemind.com/auth/*)
+1. Test complete authentication flow end-to-end
+   - Test passkey registration (if no existing credential)
+   - Test passkey authentication (usernameless flow)
+   - Test sign-out functionality
+2. Configure cross-subdomain session sharing
+   - Set up session cookies with `.sixtwoonemind.com` domain
+   - Implement session validation middleware for services
+3. Deploy portal to production (sixtwoonemind.com)
+   - Deploy to Cloudflare Pages
+   - Configure DNS: `sixtwoonemind.com` → Cloudflare Pages
+   - SSL/TLS certificates via Cloudflare
