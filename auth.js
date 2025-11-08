@@ -4,8 +4,8 @@
  * Cross-subdomain session management
  */
 
-// Windmill webhook base URL
-const API_BASE_URL = 'https://viento.dev.sixtwoone.net/api/w/sixtwoonemind/jobs/run/p/f/portal_auth';
+// Windmill webhook base URL via Cloudflare Tunnel
+const API_BASE_URL = 'https://api.sixtwoonemind.com/api/w/sixtwoonemind/jobs/run/p/f/portal_auth';
 
 // Supabase configuration (ax-pv1 project)
 const SUPABASE_CONFIG = {
