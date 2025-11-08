@@ -40,43 +40,53 @@ Centralized authentication gateway for SixTwoOne Mind services at `https://sixtw
 - [x] **Functions**: Cleanup utilities for expired challenges and sessions
 
 ### Backend API (Windmill Scripts)
-- [x] **`passkey_register_options`** - Deployed to `f/portal/auth/passkey_register_options`
-  - Generate WebAuthn registration challenge using `@simplewebauthn/server@11.0.0`
+All 5 passkey authentication endpoints deployed to `f/portal/auth/` namespace:
+
+- [x] **`passkey_register_options`** - Generate WebAuthn registration challenge
   - Create/update user record in Supabase
   - Store challenge in `webauthn_challenges` table
   - Return PublicKeyCredentialCreationOptions in 621 API format
-  - Runtime: Bun (TypeScript) with proper import syntax (no `npm:` prefix)
+
+- [x] **`passkey_register_verify`** - Verify attestation and create session
+  - Verify attestation response using `@simplewebauthn/server`
+  - Validate challenge from database
+  - Store credential in `passkey_credentials` table
+  - Create authenticated session in `auth_sessions`
+  - Return session token with user info
+
+- [x] **`passkey_authenticate_options`** - Generate authentication challenge
+  - Usernameless authentication flow (no email required)
+  - Retrieve all registered credentials for allowCredentials
+  - Store challenge in `webauthn_challenges` table
+  - Return PublicKeyCredentialRequestOptions
+
+- [x] **`passkey_authenticate_verify`** - Verify assertion and create session
+  - Verify authentication assertion using stored credential
+  - Validate challenge and signature
+  - Update credential counter for replay protection
+  - Create authenticated session in `auth_sessions`
+  - Update `last_login_at` timestamp
+  - Return session token with user info
+
+- [x] **`signout`** - Terminate user session
+  - Validate and delete session from `auth_sessions` table
+  - Return success confirmation
+
+**All endpoints**:
+- Runtime: Bun (TypeScript) with correct import syntax
+- WebAuthn: `@simplewebauthn/server@11.0.0`
+- Database: `@supabase/supabase-js@2.46.1`
+- Response format: 621 API contract (success/data/error/meta)
 
 ## In Progress 🔄
 
-### Backend API (Windmill Scripts)
-Need to implement 4 remaining scripts in Windmill `f/portal/auth` namespace:
-
-1. **`passkey_register_verify`**
-   - Verify attestation response
-   - Validate challenge
-   - Store credential in `passkey_credentials`
-   - Create session in `auth_sessions`
-   - Return session token
-
-2. **`passkey_authenticate_options`**
-   - Generate WebAuthn authentication challenge
-   - Retrieve user's credentials (optional allowCredentials)
-   - Store challenge in `webauthn_challenges`
-   - Return PublicKeyCredentialRequestOptions
-
-3. **`passkey_authenticate_verify`**
-   - Verify assertion response
-   - Validate challenge and signature
-   - Update credential counter
-   - Create session in `auth_sessions`
-   - Update `last_login_at` on users
-   - Return session token
-
-4. **`signout`**
-   - Validate session token
-   - Delete session from `auth_sessions`
-   - Return success confirmation
+### Frontend Integration
+Need to wire up frontend to backend endpoints:
+- [ ] Update `auth.js` API_BASE_URL to point to Windmill webhooks
+- [ ] Configure Windmill webhooks for each endpoint
+- [ ] Test registration flow end-to-end
+- [ ] Test authentication flow end-to-end
+- [ ] Test sign-out flow
 
 ### Technical Learnings
 - **Bun Import Syntax**: Direct imports without `npm:` prefix (e.g., `import { x } from "@package@version"`)
@@ -154,7 +164,9 @@ portal/
 - **Supabase**: ax-pv1 project (`idepddaqucsdrnsjctke.supabase.co`)
 
 ## Next Steps
-1. Implement Windmill flows for passkey endpoints
-2. Test registration and authentication flows locally
-3. Configure cross-subdomain session sharing
-4. Deploy to production and test end-to-end
+1. Configure Windmill webhooks for all 5 passkey endpoints
+2. Wire frontend to backend (update API_BASE_URL in auth.js)
+3. Test complete authentication flow end-to-end
+4. Configure cross-subdomain session sharing
+5. Deploy portal to production (sixtwoonemind.com)
+6. Deploy backend API routes (api.sixtwoonemind.com/auth/*)
