@@ -4,13 +4,16 @@
  * Cross-subdomain session management
  */
 
-// Windmill webhook base URL via Cloudflare Tunnel
-const API_BASE_URL = 'https://api.sixtwoonemind.com/api/w/sixtwoonemind/jobs/run/p/f/portal_auth';
+// Windmill webhook base URL via Cloudflare Tunnel (synchronous endpoint)
+const API_BASE_URL = 'https://api.sixtwoonemind.com/api/w/sixtwoonemind/jobs/run_wait_result/p/f/portal_auth';
 
-// Supabase configuration (ax-pv1 project)
-const SUPABASE_CONFIG = {
-    url: 'https://idepddaqucsdrnsjctke.supabase.co',
-    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkZXBkZGFxdWNzZHJuc2pjdGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgzNTgzNzQsImV4cCI6MjA1MzkzNDM3NH0.xVnbE7cDyC8uGWvF7PVgNi-FHxl8RZOKsI8i9VmcqtM'
+// Windmill webhook tokens (script-specific)
+const WEBHOOK_TOKENS = {
+    passkey_register_options: 'QCxJ4X99VYAo79ZxqQHDRvrxkbWMovH7',
+    passkey_register_verify: 'iusmWisDDLheLLfqj5m9BWVBcuOqcGDh',
+    passkey_authenticate_options: 'wBeEBxRkIrlb9IyWDby5FeEo4zADXLHm',
+    passkey_authenticate_verify: 'WcbUXOAISR3bdGaNamuwGxwEf7kXlI0f',
+    signout: 'PSl8tzrBnscb9Y0EDrhCdrYOr1DfJYZE'
 };
 
 const SESSION_KEY = 'stom_session';
@@ -130,11 +133,14 @@ export async function registerPasskey(email, name) {
         // Step 1: Get registration options from server
         const optionsResponse = await fetch(`${API_BASE_URL}/passkey_register_options`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${WEBHOOK_TOKENS.passkey_register_options}`
+            },
             body: JSON.stringify({
                 email,
                 name,
-                supabase: SUPABASE_CONFIG
+                supabase: "$res:f/ax/supabase-ax"
             })
         });
 
@@ -175,7 +181,10 @@ export async function registerPasskey(email, name) {
         // Step 3: Send credential to server for verification
         const verificationResponse = await fetch(`${API_BASE_URL}/passkey_register_verify`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${WEBHOOK_TOKENS.passkey_register_verify}`
+            },
             body: JSON.stringify({
                 email,
                 credential: {
@@ -187,7 +196,7 @@ export async function registerPasskey(email, name) {
                         attestationObject: bufferToBase64URL(credential.response.attestationObject)
                     }
                 },
-                supabase: SUPABASE_CONFIG
+                supabase: "$res:f/ax/supabase-ax"
             })
         });
 
@@ -224,9 +233,12 @@ export async function authenticatePasskey() {
         // Step 1: Get authentication options from server
         const optionsResponse = await fetch(`${API_BASE_URL}/passkey_authenticate_options`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${WEBHOOK_TOKENS.passkey_authenticate_options}`
+            },
             body: JSON.stringify({
-                supabase: SUPABASE_CONFIG
+                supabase: "$res:f/ax/supabase-ax"
             })
         });
 
@@ -265,7 +277,10 @@ export async function authenticatePasskey() {
         // Step 3: Send assertion to server for verification
         const verificationResponse = await fetch(`${API_BASE_URL}/passkey_authenticate_verify`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${WEBHOOK_TOKENS.passkey_authenticate_verify}`
+            },
             body: JSON.stringify({
                 credential: {
                     id: assertion.id,
@@ -279,7 +294,7 @@ export async function authenticatePasskey() {
                             bufferToBase64URL(assertion.response.userHandle) : null
                     }
                 },
-                supabase: SUPABASE_CONFIG
+                supabase: "$res:f/ax/supabase-ax"
             })
         });
 
@@ -321,10 +336,13 @@ export async function signOut() {
         try {
             await fetch(`${API_BASE_URL}/signout`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${WEBHOOK_TOKENS.signout}`
+                },
                 body: JSON.stringify({
                     session_token: session.session_token,
-                    supabase: SUPABASE_CONFIG
+                    supabase: "$res:f/ax/supabase-ax"
                 })
             });
         } catch (error) {
