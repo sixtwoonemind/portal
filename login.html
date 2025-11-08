@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - SixTwoOne Mind</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light theme (default) */
+            --bg-primary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-input: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+            /* Logo colors - positions [1-9] */
+            --purple-dark: #7c3aed;
+            --purple-base: #8b5cf6;
+            --purple-light: #a855f7;
+            --orange-base: #FFA500;
+            --orange-dark: #FF8C00;
+            --orange-light: #FF7F00;
+            --magenta-base: #E891D4;
+            --magenta-dark: #db2777;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-input: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        /* Nav Bar */
+        .nav-bar {
+            width: 100%;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .nav-content {
+            max-width: 75%;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* STOM Logo Component - Exact Structure */
+        .stom-logo-container {
+            position: relative;
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            background: transparent !important;
+            box-sizing: content-box !important;
+        }
+
+        .stom-logo-icon-container {
+            all: initial;
+            width: 63px !important;
+            height: 63px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .logo-container {
+            width: 63px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .square {
+            width: 1rem;
+            max-width: 16px;
+            height: 1rem;
+            max-height: 16px;
+            border-radius: 2px;
+            margin: 2px;
+            position: relative;
+        }
+
+        .square::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5px;
+            height: 5px;
+            background: var(--bg-primary);
+            border-radius: 50%;
+        }
+
+        .square.red {
+            background: linear-gradient(135deg, var(--purple-base) 0%, var(--purple-dark) 100%);
+            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .square.red:nth-child(even) {
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-base) 100%);
+        }
+
+        .square.green {
+            background: linear-gradient(135deg, var(--orange-base) 0%, var(--orange-dark) 100%);
+            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .square.green:nth-child(8) {
+            background: linear-gradient(135deg, var(--orange-light) 0%, #FF6347 100%);
+        }
+
+        .square.blue {
+            background: linear-gradient(135deg, var(--magenta-base) 0%, var(--magenta-dark) 100%);
+            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .stom-logo-text-container {
+            all: initial;
+            height: auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            flex-shrink: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .stom-logo-sixtwoone {
+            all: initial;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 1.4rem !important;
+            font-weight: 400 !important;
+            letter-spacing: 2px !important;
+            line-height: 1 !important;
+            background: linear-gradient(45deg, var(--magenta-base) 0%, var(--orange-base) 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            color: var(--magenta-base) !important;
+            display: block !important;
+            margin-bottom: 5px !important;
+            padding: 0 !important;
+            border: none !important;
+            text-decoration: none !important;
+            text-transform: none !important;
+            text-align: left !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+        }
+
+        .stom-logo-mind {
+            all: initial;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 1px !important;
+            line-height: 1 !important;
+            color: var(--text-primary) !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            text-decoration: none !important;
+            text-transform: none !important;
+            text-align: left !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-card);
+            border-color: var(--purple-base);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+        }
+
+        /* Three-dot separator [1][5][9] */
+        .separator {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            justify-content: center;
+        }
+
+        .separator .dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+        }
+
+        .separator .dot:nth-child(1) {
+            background: linear-gradient(135deg, var(--purple-base) 0%, var(--purple-dark) 100%);
+        }
+
+        .separator .dot:nth-child(2) {
+            background: linear-gradient(135deg, var(--purple-base) 0%, var(--purple-dark) 100%);
+        }
+
+        .separator .dot:nth-child(3) {
+            background: linear-gradient(135deg, var(--magenta-base) 0%, var(--magenta-dark) 100%);
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, var(--purple-base) 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .passkey-button {
+            width: 100%;
+            background: linear-gradient(90deg, var(--magenta-dark) 0%, var(--orange-base) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .passkey-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .passkey-button:active {
+            transform: translateY(0);
+        }
+
+        .passkey-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-content">
+            <!-- STOM Logo -->
+            <div class="stom-logo-container">
+                <div class="stom-logo-icon-container">
+                    <div class="logo-container">
+                        <div class="square red"></div>
+                        <div class="square red"></div>
+                        <div class="square red"></div>
+                        <div class="square red"></div>
+                        <div class="square red"></div>
+                        <div class="square red"></div>
+                        <div class="square green"></div>
+                        <div class="square green"></div>
+                        <div class="square blue"></div>
+                    </div>
+                </div>
+
+                <div class="stom-logo-text-container">
+                    <div class="stom-logo-sixtwoone">SIXTWOONE</div>
+                    <div class="stom-logo-mind">Mind</div>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button class="theme-toggle" id="themeToggle">
+                <span id="themeLabel">Dark Mode</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="login-card">
+            <!-- Three-dot separator [1][5][9] -->
+            <div class="separator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <h1 class="login-title">SixTwoOne Mind</h1>
+            <p class="login-subtitle">Sign in to access your services</p>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <button class="passkey-button" id="passkeyButton">
+                Sign in with Passkey
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { authenticatePasskey, isAuthenticated, supportsWebAuthn } from './auth.js';
+
+        // Theme management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeLabel = document.getElementById('themeLabel');
+        const html = document.documentElement;
+
+        // Load saved theme or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeLabel.textContent = 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeLabel.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        });
+
+        // Check if already authenticated
+        if (isAuthenticated()) {
+            window.location.href = '/dashboard.html';
+        }
+
+        // Error display
+        const errorMessage = document.getElementById('errorMessage');
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('visible');
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('visible');
+        }
+
+        // Check WebAuthn support
+        const passkeyButton = document.getElementById('passkeyButton');
+        if (!supportsWebAuthn()) {
+            showError('Your browser does not support passkeys. Please use a modern browser like Chrome, Safari, or Edge.');
+            passkeyButton.disabled = true;
+        }
+
+        // Passkey authentication
+        passkeyButton.addEventListener('click', async () => {
+            hideError();
+            passkeyButton.disabled = true;
+            passkeyButton.textContent = 'Authenticating...';
+
+            try {
+                await authenticatePasskey();
+                // Redirect to dashboard on success
+                window.location.href = '/dashboard.html';
+            } catch (error) {
+                console.error('Authentication failed:', error);
+                showError(error.message || 'Authentication failed. Please try again.');
+                passkeyButton.disabled = false;
+                passkeyButton.textContent = 'Sign in with Passkey';
+            }
+        });
+    </script>
+</body>
+</html>
