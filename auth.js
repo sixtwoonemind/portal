@@ -4,7 +4,15 @@
  * Cross-subdomain session management
  */
 
-const API_BASE_URL = 'https://api.sixtwoonemind.com';
+// Windmill webhook base URL
+const API_BASE_URL = 'https://viento.dev.sixtwoone.net/api/w/sixtwoonemind/jobs/run/p/f/portal_auth';
+
+// Supabase configuration (ax-pv1 project)
+const SUPABASE_CONFIG = {
+    url: 'https://idepddaqucsdrnsjctke.supabase.co',
+    key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkZXBkZGFxdWNzZHJuc2pjdGtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgzNTgzNzQsImV4cCI6MjA1MzkzNDM3NH0.xVnbE7cDyC8uGWvF7PVgNi-FHxl8RZOKsI8i9VmcqtM'
+};
+
 const SESSION_KEY = 'stom_session';
 
 /**
@@ -120,10 +128,14 @@ function base64URLToBuffer(base64url) {
 export async function registerPasskey(email, name) {
     try {
         // Step 1: Get registration options from server
-        const optionsResponse = await fetch(`${API_BASE_URL}/auth/passkey/register/options`, {
+        const optionsResponse = await fetch(`${API_BASE_URL}/passkey_register_options`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, name })
+            body: JSON.stringify({
+                email,
+                name,
+                supabase: SUPABASE_CONFIG
+            })
         });
 
         if (!optionsResponse.ok) {
@@ -161,7 +173,7 @@ export async function registerPasskey(email, name) {
         }
 
         // Step 3: Send credential to server for verification
-        const verificationResponse = await fetch(`${API_BASE_URL}/auth/passkey/register/verify`, {
+        const verificationResponse = await fetch(`${API_BASE_URL}/passkey_register_verify`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -174,7 +186,8 @@ export async function registerPasskey(email, name) {
                         clientDataJSON: bufferToBase64URL(credential.response.clientDataJSON),
                         attestationObject: bufferToBase64URL(credential.response.attestationObject)
                     }
-                }
+                },
+                supabase: SUPABASE_CONFIG
             })
         });
 
@@ -209,9 +222,12 @@ export async function registerPasskey(email, name) {
 export async function authenticatePasskey() {
     try {
         // Step 1: Get authentication options from server
-        const optionsResponse = await fetch(`${API_BASE_URL}/auth/passkey/authenticate/options`, {
+        const optionsResponse = await fetch(`${API_BASE_URL}/passkey_authenticate_options`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                supabase: SUPABASE_CONFIG
+            })
         });
 
         if (!optionsResponse.ok) {
@@ -247,7 +263,7 @@ export async function authenticatePasskey() {
         }
 
         // Step 3: Send assertion to server for verification
-        const verificationResponse = await fetch(`${API_BASE_URL}/auth/passkey/authenticate/verify`, {
+        const verificationResponse = await fetch(`${API_BASE_URL}/passkey_authenticate_verify`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -262,7 +278,8 @@ export async function authenticatePasskey() {
                         userHandle: assertion.response.userHandle ?
                             bufferToBase64URL(assertion.response.userHandle) : null
                     }
-                }
+                },
+                supabase: SUPABASE_CONFIG
             })
         });
 
@@ -302,12 +319,13 @@ export async function signOut() {
     // Notify server (best effort - don't throw if fails)
     if (session?.session_token) {
         try {
-            await fetch(`${API_BASE_URL}/auth/signout`, {
+            await fetch(`${API_BASE_URL}/signout`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session.session_token}`
-                }
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    session_token: session.session_token,
+                    supabase: SUPABASE_CONFIG
+                })
             });
         } catch (error) {
             console.error('Server signout failed (local session cleared):', error);
