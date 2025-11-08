@@ -39,31 +39,33 @@ Centralized authentication gateway for SixTwoOne Mind services at `https://sixtw
 - [x] **Triggers**: Auto-update `updated_at` on users table
 - [x] **Functions**: Cleanup utilities for expired challenges and sessions
 
+### Backend API (Windmill Scripts)
+- [x] **`passkey_register_options`** - Deployed to `f/portal/auth/passkey_register_options`
+  - Generate WebAuthn registration challenge using `@simplewebauthn/server@11.0.0`
+  - Create/update user record in Supabase
+  - Store challenge in `webauthn_challenges` table
+  - Return PublicKeyCredentialCreationOptions in 621 API format
+  - Runtime: Bun (TypeScript) with proper import syntax (no `npm:` prefix)
+
 ## In Progress 🔄
 
-### Backend API (Windmill Flows)
-Need to implement 5 flows in Windmill `f/portal/auth` namespace:
+### Backend API (Windmill Scripts)
+Need to implement 4 remaining scripts in Windmill `f/portal/auth` namespace:
 
-1. **`passkey_register_options`**
-   - Generate WebAuthn registration challenge
-   - Create/update user record
-   - Store challenge in `webauthn_challenges`
-   - Return PublicKeyCredentialCreationOptions
-
-2. **`passkey_register_verify`**
+1. **`passkey_register_verify`**
    - Verify attestation response
    - Validate challenge
    - Store credential in `passkey_credentials`
    - Create session in `auth_sessions`
    - Return session token
 
-3. **`passkey_authenticate_options`**
+2. **`passkey_authenticate_options`**
    - Generate WebAuthn authentication challenge
    - Retrieve user's credentials (optional allowCredentials)
    - Store challenge in `webauthn_challenges`
    - Return PublicKeyCredentialRequestOptions
 
-4. **`passkey_authenticate_verify`**
+3. **`passkey_authenticate_verify`**
    - Verify assertion response
    - Validate challenge and signature
    - Update credential counter
@@ -71,14 +73,17 @@ Need to implement 5 flows in Windmill `f/portal/auth` namespace:
    - Update `last_login_at` on users
    - Return session token
 
-5. **`signout`**
+4. **`signout`**
    - Validate session token
    - Delete session from `auth_sessions`
    - Return success confirmation
 
-### Dependencies
-- WebAuthn library for TypeScript (Bun runtime in Windmill)
-- Recommendation: `@simplewebauthn/server` (well-tested, comprehensive)
+### Technical Learnings
+- **Bun Import Syntax**: Direct imports without `npm:` prefix (e.g., `import { x } from "@package@version"`)
+- **Deno Import Syntax**: Requires `npm:` prefix (e.g., `import { x } from "npm:@package@version"`)
+- **Critical**: Using wrong import syntax causes lockfile generation failures
+- **Windmill CLI Workflow**: `bootstrap` → write code → `generate-metadata` → `sync push`
+- **Selective Sync**: Use `--includes 'f/portal/**'` to push only specific namespaces
 
 ## Pending 📋
 
