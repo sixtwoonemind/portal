@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - SixTwoOne Mind</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <style>
         * {
             margin: 0;
@@ -240,29 +241,51 @@
             text-align: center;
         }
 
-        /* Three-dot separator [1][5][9] */
-        .separator {
-            display: flex;
-            gap: 8px;
+        /* Portal frame - 3x3 grid without center [5] */
+        .portal-frame {
+            display: grid;
+            grid-template-columns: repeat(3, 16px);
+            gap: 6px;
             margin-bottom: 32px;
             justify-content: center;
         }
 
-        .separator .dot {
+        .portal-frame .square {
             width: 16px;
             height: 16px;
             border-radius: 2px;
         }
 
-        .separator .dot:nth-child(1) {
+        /* Row 1 - all purple */
+        .portal-frame .square:nth-child(1),
+        .portal-frame .square:nth-child(3) {
             background: linear-gradient(135deg, var(--purple-base) 0%, var(--purple-dark) 100%);
         }
 
-        .separator .dot:nth-child(2) {
-            background: linear-gradient(135deg, var(--purple-base) 0%, var(--purple-dark) 100%);
+        .portal-frame .square:nth-child(2) {
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-base) 100%);
         }
 
-        .separator .dot:nth-child(3) {
+        /* Row 2 - purple on sides, empty center (portal) */
+        .portal-frame .square:nth-child(4),
+        .portal-frame .square:nth-child(6) {
+            background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-base) 100%);
+        }
+
+        .portal-frame .square:nth-child(5) {
+            background: transparent;
+        }
+
+        /* Row 3 - orange, orange, magenta */
+        .portal-frame .square:nth-child(7) {
+            background: linear-gradient(135deg, var(--orange-base) 0%, var(--orange-dark) 100%);
+        }
+
+        .portal-frame .square:nth-child(8) {
+            background: linear-gradient(135deg, var(--orange-light) 0%, #FF6347 100%);
+        }
+
+        .portal-frame .square:nth-child(9) {
             background: linear-gradient(135deg, var(--magenta-base) 0%, var(--magenta-dark) 100%);
         }
 
@@ -361,14 +384,19 @@
 
     <div class="main-content">
         <div class="login-card">
-            <!-- Three-dot separator [1][5][9] -->
-            <div class="separator">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+            <!-- Portal frame - 3x3 grid with empty center -->
+            <div class="portal-frame">
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
+                <div class="square"></div>
             </div>
 
-            <h1 class="login-title">SixTwoOne Mind</h1>
             <p class="login-subtitle">Sign in to access your services</p>
 
             <div class="error-message" id="errorMessage"></div>

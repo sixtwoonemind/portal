@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 3x3 grid of the STOM logo -->
+  <!-- Row 1 -->
+  <rect x="5" y="5" width="26" height="26" rx="2" fill="url(#purple1)"/>
+  <rect x="37" y="5" width="26" height="26" rx="2" fill="url(#purple2)"/>
+  <rect x="69" y="5" width="26" height="26" rx="2" fill="url(#purple3)"/>
+
+  <!-- Row 2 -->
+  <rect x="5" y="37" width="26" height="26" rx="2" fill="url(#purple4)"/>
+  <rect x="37" y="37" width="26" height="26" rx="2" fill="url(#purple5)"/>
+  <rect x="69" y="37" width="26" height="26" rx="2" fill="url(#purple6)"/>
+
+  <!-- Row 3 -->
+  <rect x="5" y="69" width="26" height="26" rx="2" fill="url(#orange1)"/>
+  <rect x="37" y="69" width="26" height="26" rx="2" fill="url(#orange2)"/>
+  <rect x="69" y="69" width="26" height="26" rx="2" fill="url(#magenta)"/>
+
+  <!-- Center dots -->
+  <circle cx="18" cy="18" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="18" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="82" cy="18" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="18" cy="50" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="50" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="82" cy="50" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="18" cy="82" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="82" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="82" cy="82" r="2.5" fill="white" opacity="0.9"/>
+
+  <!-- Gradients -->
+  <defs>
+    <!-- Purple gradients (positions 1-6) -->
+    <linearGradient id="purple1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Orange gradients (positions 7-8) -->
+    <linearGradient id="orange1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFA500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="orange2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF7F00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF6347;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Magenta gradient (position 9) -->
+    <linearGradient id="magenta" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E891D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
