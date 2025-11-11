@@ -407,7 +407,7 @@
 
         <div class="services-grid">
             <!-- Ax Service Card -->
-            <a href="https://ax.sixtwoonemind.com" class="service-card ax">
+            <a href="#" class="service-card ax" id="axLink">
                 <div class="service-icon">
                     <div class="dot"></div>
                     <div class="dot"></div>
@@ -475,6 +475,21 @@
             } catch (error) {
                 console.error('Sign out error:', error);
                 // Clear session anyway and redirect
+                window.location.href = '/login.html';
+            }
+        });
+
+        // Ax link - transfer session via URL parameter
+        const axLink = document.getElementById('axLink');
+        axLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const session = getSession();
+            if (session) {
+                // Encode session as base64 for URL
+                const sessionData = btoa(JSON.stringify(session));
+                window.location.href = `https://ax.sixtwoonemind.com?session=${sessionData}`;
+            } else {
+                // No session, redirect to login
                 window.location.href = '/login.html';
             }
         });
