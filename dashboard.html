@@ -487,7 +487,7 @@
             if (session) {
                 // Encode session as base64 for URL
                 const sessionData = btoa(JSON.stringify(session));
-                window.location.href = `https://ax.sixtwoonemind.com?session=${sessionData}`;
+                window.location.href = `/ax/?session=${sessionData}`;
             } else {
                 // No session, redirect to login
                 window.location.href = '/login.html';
