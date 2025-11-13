@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 3x3 grid in Ax's indigo/cyan/purple palette -->
+
+  <!-- Row 1: Indigo shades -->
+  <rect x="5" y="5" width="26" height="26" rx="2" fill="url(#indigo1)"/>
+  <rect x="37" y="5" width="26" height="26" rx="2" fill="url(#indigo2)"/>
+  <rect x="69" y="5" width="26" height="26" rx="2" fill="url(#indigo3)"/>
+
+  <!-- Row 2: Cyan shades -->
+  <rect x="5" y="37" width="26" height="26" rx="2" fill="url(#cyan1)"/>
+  <rect x="37" y="37" width="26" height="26" rx="2" fill="url(#cyan2)"/>
+  <rect x="69" y="37" width="26" height="26" rx="2" fill="url(#cyan3)"/>
+
+  <!-- Row 3: Purple/Indigo mix -->
+  <rect x="5" y="69" width="26" height="26" rx="2" fill="url(#purple1)"/>
+  <rect x="37" y="69" width="26" height="26" rx="2" fill="url(#purple2)"/>
+  <rect x="69" y="69" width="26" height="26" rx="2" fill="url(#indigo4)"/>
+
+  <!-- Center dots -->
+  <circle cx="18" cy="18" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="18" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="82" cy="18" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="18" cy="50" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="50" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="82" cy="50" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="18" cy="82" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="82" r="2.5" fill="white" opacity="0.9"/>
+  <circle cx="82" cy="82" r="2.5" fill="white" opacity="0.9"/>
+
+  <!-- Gradients -->
+  <defs>
+    <!-- Indigo gradients -->
+    <linearGradient id="indigo1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="indigo2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#818cf8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="indigo3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="indigo4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#818cf8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Cyan gradients -->
+    <linearGradient id="cyan1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cyan2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cyan3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Purple gradients -->
+    <linearGradient id="purple1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purple2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
