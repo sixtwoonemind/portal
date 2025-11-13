@@ -70,6 +70,18 @@
             align-items: center;
         }
 
+        /* Logo link styling */
+        .logo-link {
+            text-decoration: none;
+            display: flex;
+            align-items: flex-start;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.8;
+        }
+
         /* STOM Logo Component - Canonical Structure */
         .stom-logo-wrapper {
             font-size: 20px; /* Establishes rem reference point */
@@ -358,49 +370,51 @@
     <div class="nav-bar">
         <div class="nav-content">
             <!-- STOM Logo (Canonical Structure) -->
-            <div class="stom-logo-wrapper">
-                <div class="stom-logo">
-                    <div class="stom-logo-icon">
-                        <div class="icon-grid">
-                            <div class="grid-cell">
-                                <div class="visual-square six-1"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square six-2"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square six-3"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square six-4"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square six-5"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square six-6"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square two-1"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square two-2"></div>
-                            </div>
-                            <div class="grid-cell">
-                                <div class="visual-square one"></div>
+            <a href="/" class="logo-link" aria-label="Go to portal home">
+                <div class="stom-logo-wrapper">
+                    <div class="stom-logo">
+                        <div class="stom-logo-icon">
+                            <div class="icon-grid">
+                                <div class="grid-cell">
+                                    <div class="visual-square six-1"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-2"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-3"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-4"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-5"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-6"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square two-1"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square two-2"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square one"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="stom-logo-text">
-                        <div class="stom-logo-sixtwoone">
-                            <span>SIXTWOONE</span>
-                        </div>
-                        <div class="stom-logo-mind">
-                            <span>Mind</span>
+                        <div class="stom-logo-text">
+                            <div class="stom-logo-sixtwoone">
+                                <span>SIXTWOONE</span>
+                            </div>
+                            <div class="stom-logo-mind">
+                                <span>Mind</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
 
             <!-- Nav Controls -->
             <div class="nav-controls">
