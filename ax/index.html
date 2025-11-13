@@ -326,6 +326,76 @@
            End Canonical CSS
            ============================================ */
 
+        /* ============================================
+           Begin Ax Badge CSS
+           ============================================ */
+        .ax-badge-wrapper {
+            font-size: 20px; /* Establishes rem reference point */
+            display: block;
+            margin: 0 auto;
+        }
+
+        .ax-badge {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+
+        .leterform-a {
+            flex: 1;
+        }
+
+        .letterform-row {
+            width: 100%;
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .letterform-row .grid-cell {
+            flex: 1;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .letterform-row .grid-cell .visual-square {
+            width: 85%;
+            height: 85%;
+            border-radius: 15%;
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+        }
+
+        /* Ax Badge Colors - using indigo/cyan/purple palette */
+        .ax-six-dark {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        .ax-six-light {
+            background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+        }
+
+        .ax-two-dark {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        }
+
+        .ax-two-light {
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
+        }
+
+        .ax-one {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .leterform-x {
+            flex: 1;
+        }
+        /* ============================================
+           End Ax Badge CSS
+           ============================================ */
+
         /* Messages Container */
         .messages-container {
             flex: 1;
@@ -970,67 +1040,79 @@
         function showEmptyState() {
             messagesContainer.innerHTML = `
                 <div class="empty-state">
-                    <div class="ax-badge">
-                        <svg width="100" height="104" viewBox="0 0 100 104" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Top apex (indigo) -->
-                            <rect x="40" y="0" width="20" height="20" rx="3" fill="url(#indigo1)" filter="url(#shadow)"/>
-                            <circle cx="50" cy="10" r="3" fill="var(--bg-card)"/>
-
-                            <!-- Upper sides (indigo) -->
-                            <rect x="26" y="26" width="20" height="20" rx="3" fill="url(#indigo2)" filter="url(#shadow)"/>
-                            <circle cx="36" cy="36" r="3" fill="var(--bg-card)"/>
-
-                            <rect x="54" y="26" width="20" height="20" rx="3" fill="url(#indigo1)" filter="url(#shadow)"/>
-                            <circle cx="64" cy="36" r="3" fill="var(--bg-card)"/>
-
-                            <!-- Crossbar (indigo) -->
-                            <rect x="12" y="52" width="20" height="20" rx="3" fill="url(#indigo2)" filter="url(#shadow)"/>
-                            <circle cx="22" cy="62" r="3" fill="var(--bg-card)"/>
-
-                            <rect x="40" y="52" width="20" height="20" rx="3" fill="url(#indigo1)" filter="url(#shadow)"/>
-                            <circle cx="50" cy="62" r="3" fill="var(--bg-card)"/>
-
-                            <rect x="68" y="52" width="20" height="20" rx="3" fill="url(#indigo2)" filter="url(#shadow)"/>
-                            <circle cx="78" cy="62" r="3" fill="var(--bg-card)"/>
-
-                            <!-- Lower legs (cyan) -->
-                            <rect x="0" y="78" width="20" height="20" rx="3" fill="url(#cyan1)" filter="url(#shadow)"/>
-                            <circle cx="10" cy="88" r="3" fill="var(--bg-card)"/>
-
-                            <rect x="80" y="78" width="20" height="20" rx="3" fill="url(#cyan2)" filter="url(#shadow)"/>
-                            <circle cx="90" cy="88" r="3" fill="var(--bg-card)"/>
-
-                            <!-- Bottom accent (purple) -->
-                            <rect x="0" y="104" width="20" height="20" rx="3" fill="url(#purple)" filter="url(#shadow)" transform="translate(0, -20)"/>
-                            <circle cx="10" cy="94" r="3" fill="var(--bg-card)"/>
-
-                            <!-- Gradients -->
-                            <defs>
-                                <linearGradient id="indigo1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
-                                </linearGradient>
-                                <linearGradient id="indigo2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#818cf8;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
-                                </linearGradient>
-                                <linearGradient id="cyan1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#0891b2;stop-opacity:1" />
-                                </linearGradient>
-                                <linearGradient id="cyan2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
-                                </linearGradient>
-                                <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
-                                </linearGradient>
-                                <filter id="shadow">
-                                    <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.3"/>
-                                </filter>
-                            </defs>
-                        </svg>
+                    <div class="ax-badge-wrapper">
+                        <div class="ax-badge">
+                            <div class="leterform-a">
+                                <div class="letterform-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-two-light"></div>
+                                    </div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="letterform-row">
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-two-dark"></div>
+                                    </div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-one"></div>
+                                    </div>
+                                </div>
+                                <div class="letterform-row">
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-six-light"></div>
+                                    </div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-six-dark"></div>
+                                    </div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-six-light"></div>
+                                    </div>
+                                </div>
+                                <div class="letterform-row">
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-six-dark"></div>
+                                    </div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-six-dark"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="leterform-x">
+                                <div class="letterform-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="letterform-row">
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-six-dark"></div>
+                                    </div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-six-light"></div>
+                                    </div>
+                                </div>
+                                <div class="letterform-row">
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-two-light"></div>
+                                    </div>
+                                    <div class="grid-cell"></div>
+                                </div>
+                                <div class="letterform-row">
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-two-dark"></div>
+                                    </div>
+                                    <div class="grid-cell"></div>
+                                    <div class="grid-cell">
+                                        <div class="visual-square ax-one"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="ax-caption">Talk to Ax</div>
                 </div>
