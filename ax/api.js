@@ -38,7 +38,8 @@ export async function chat(message, conversationId = 'new') {
         const response = await fetch(WEBHOOKS.chat.url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${WEBHOOKS.chat.token}`
             },
             body: JSON.stringify({
                 message: message.trim(),

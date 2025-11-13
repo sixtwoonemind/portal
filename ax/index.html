@@ -1237,7 +1237,8 @@
                 const response = await fetch(WEBHOOKS.listConversations.url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${WEBHOOKS.listConversations.token}`
                     },
                     body: JSON.stringify({
                         supabase: "$res:f/ax/supabase-ax",
@@ -1324,7 +1325,8 @@
                 const response = await fetch(WEBHOOKS.getConversationItems.url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${WEBHOOKS.getConversationItems.token}`
                     },
                     body: JSON.stringify({
                         openai: "$res:f/ax/openai-ax",
