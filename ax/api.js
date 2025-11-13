@@ -36,7 +36,7 @@ export async function chat(message, conversationId = 'new') {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/w/sixtwoonemind/jobs/run_wait_result/f/f/ax/chat`, {
+        const response = await fetch(`${API_BASE_URL}/api/w/sixtwoonemind/jobs/run_wait_result/f/ax/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
