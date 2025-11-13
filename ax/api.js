@@ -1,12 +1,12 @@
 /**
  * Ax API Client
- * Handles communication with api.sixtwoonemind.com
+ * Handles communication with Windmill (viento.dev.sixtwoone.net)
  * Implements the standardized API contract
  */
 
 import { getSession, getConversationId, setConversationId } from './auth.js';
 
-const API_BASE_URL = 'https://api.sixtwoonemind.com';
+const API_BASE_URL = 'https://viento.dev.sixtwoone.net';
 
 /**
  * API Response structure (from contract)
@@ -40,12 +40,12 @@ export async function chat(message, conversationId = 'new') {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer hrmAptCbl9bh3Mg0KJGNXwDirFF0mSKm'
+                'Authorization': `Bearer ${session.session_token}`
             },
             body: JSON.stringify({
                 message: message.trim(),
                 conversation_id: conversationId,
-                user_id: session.user.email
+                user_id: session.email
             })
         });
 
