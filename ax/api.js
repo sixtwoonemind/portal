@@ -21,10 +21,11 @@ const API_BASE_URL = 'https://api.sixtwoonemind.com';
 /**
  * Chat with Ax
  * @param {string} message - User message
+ * @param {string} conversationId - OpenAI conversation ID or 'new'
  * @returns {Promise<Object>} - { response, conversationId, usage }
  * @throws {Error} - On API error or network failure
  */
-export async function chat(message) {
+export async function chat(message, conversationId = 'new') {
     const session = getSession();
     if (!session) {
         throw new Error('No active session');
@@ -33,8 +34,6 @@ export async function chat(message) {
     if (!message || message.trim() === '') {
         throw new Error('Message cannot be empty');
     }
-
-    const conversationId = getConversationId();
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/w/sixtwoonemind/jobs/run_wait_result/f/f/ax/chat`, {
@@ -46,7 +45,7 @@ export async function chat(message) {
             body: JSON.stringify({
                 message: message.trim(),
                 conversation_id: conversationId,
-                user_id: session.user_id
+                user_id: session.user.email
             })
         });
 
