@@ -52,14 +52,17 @@ export async function chat(message, conversationId = 'new') {
         // Parse JSON response
         const result = await response.json();
 
+        // Extract body from CORS-wrapped response
+        const unwrapped = result.body || result;
+
         // Check API contract success field
-        if (!result.success) {
-            const error = result.error || {};
+        if (!unwrapped.success) {
+            const error = unwrapped.error || {};
             throw new Error(error.message || 'API request failed');
         }
 
         // Extract data
-        const data = result.data || {};
+        const data = unwrapped.data || {};
 
         // Store conversation ID for future messages
         if (data.conversation_id) {
@@ -70,8 +73,8 @@ export async function chat(message, conversationId = 'new') {
             response: data.response || '',
             conversationId: data.conversation_id || conversationId,
             messageId: data.message_id || null,
-            usage: result.meta?.usage || null,
-            requestId: result.meta?.request_id || null
+            usage: unwrapped.meta?.usage || null,
+            requestId: unwrapped.meta?.request_id || null
         };
     } catch (error) {
         // Network error or JSON parse error
