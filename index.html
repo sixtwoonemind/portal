@@ -70,138 +70,129 @@
             align-items: center;
         }
 
-        /* STOM Logo Component - Exact Structure */
-        .stom-logo-container {
-            position: relative;
-            display: flex !important;
-            align-items: flex-start !important;
-            gap: 12px !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-            background: transparent !important;
-            box-sizing: content-box !important;
+        /* STOM Logo Component - Canonical Structure */
+        .stom-logo-wrapper {
+            font-size: 20px; /* Establishes rem reference point */
         }
 
-        .stom-logo-icon-container {
-            all: initial;
-            width: 63px !important;
-            height: 63px !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            flex-shrink: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-            background: transparent !important;
+        .stom-logo {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 0.25rem;
         }
 
-        .logo-container {
-            width: 63px;
+        .stom-logo-icon {
+            flex: 0 0 auto;
+            width: 3.15rem;
+            height: 3.15rem;
+        }
+
+        .icon-grid {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-wrap: wrap;
         }
 
-        .square {
-            width: 1rem;
-            max-width: 16px;
-            height: 1rem;
-            max-height: 16px;
-            border-radius: 2px;
-            margin: 2px;
+        .grid-cell {
+            flex: 0 0 33.333%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-square {
+            width: 80%;
+            height: 80%;
+            border-radius: 10%;
             position: relative;
         }
 
-        .square::after {
+        .visual-square::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 5px;
-            height: 5px;
+            width: 33%;
+            height: 33%;
             background: var(--bg-primary);
             border-radius: 50%;
         }
 
-        .square.red {
-            background: linear-gradient(135deg, var(--purple-base) 0%, var(--purple-dark) 100%);
-            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+        /* Six color - foundational (darker shade for odd positions) */
+        .six-1, .six-3, .six-5 {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
         }
 
-        .square.red:nth-child(even) {
-            background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-base) 100%);
+        /* Six color - foundational (lighter shade for even positions) */
+        .six-2, .six-4, .six-6 {
+            background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
         }
 
-        .square.green {
-            background: linear-gradient(135deg, var(--orange-base) 0%, var(--orange-dark) 100%);
-            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+        /* Two color - transition (darker shade) */
+        .two-1 {
+            background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
         }
 
-        .square.green:nth-child(8) {
-            background: linear-gradient(135deg, var(--orange-light) 0%, #FF6347 100%);
+        /* Two color - transition (lighter shade) */
+        .two-2 {
+            background: linear-gradient(135deg, #FF7F00 0%, #FF6347 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
         }
 
-        .square.blue {
-            background: linear-gradient(135deg, var(--magenta-base) 0%, var(--magenta-dark) 100%);
-            box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.3);
+        /* One color - accent */
+        .one {
+            background: linear-gradient(135deg, #E891D4 0%, #db2777 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
         }
 
-        .stom-logo-text-container {
-            all: initial;
-            height: auto !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: flex-start !important;
-            flex-shrink: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-            background: transparent !important;
+        .stom-logo-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
         .stom-logo-sixtwoone {
-            all: initial;
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            font-size: 1.4rem !important;
-            font-weight: 400 !important;
-            letter-spacing: 2px !important;
-            line-height: 1 !important;
-            background: linear-gradient(45deg, var(--magenta-base) 0%, var(--orange-base) 100%) !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
-            background-clip: text !important;
-            color: var(--magenta-base) !important;
-            display: block !important;
-            margin-bottom: 5px !important;
-            padding: 0 !important;
-            border: none !important;
-            text-decoration: none !important;
-            text-transform: none !important;
-            text-align: left !important;
-            user-select: none !important;
-            -webkit-user-select: none !important;
+            flex: 1;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-top: 0.2rem;
+        }
+
+        .stom-logo-sixtwoone span {
+            font-size: 1.4rem;
+            font-weight: 400;
+            letter-spacing: 0.1rem;
+            line-height: 1;
+            background: linear-gradient(45deg, #E891D4 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: #E891D4;
         }
 
         .stom-logo-mind {
-            all: initial;
-            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            font-size: 1.5rem !important;
-            font-weight: 700 !important;
-            letter-spacing: 1px !important;
-            line-height: 1 !important;
-            color: var(--text-primary) !important;
-            display: block !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-            text-decoration: none !important;
-            text-transform: none !important;
-            text-align: left !important;
-            user-select: none !important;
-            -webkit-user-select: none !important;
+            flex: 1;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .stom-logo-mind span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05rem;
+            line-height: 1;
+            color: var(--text-primary);
         }
 
         /* Theme Toggle */
@@ -353,25 +344,48 @@
 <body>
     <div class="nav-bar">
         <div class="nav-content">
-            <!-- STOM Logo -->
-            <div class="stom-logo-container">
-                <div class="stom-logo-icon-container">
-                    <div class="logo-container">
-                        <div class="square red"></div>
-                        <div class="square red"></div>
-                        <div class="square red"></div>
-                        <div class="square red"></div>
-                        <div class="square red"></div>
-                        <div class="square red"></div>
-                        <div class="square green"></div>
-                        <div class="square green"></div>
-                        <div class="square blue"></div>
+            <!-- STOM Logo (Canonical Structure) -->
+            <div class="stom-logo-wrapper">
+                <div class="stom-logo">
+                    <div class="stom-logo-icon">
+                        <div class="icon-grid">
+                            <div class="grid-cell">
+                                <div class="visual-square six-1"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square six-2"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square six-3"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square six-4"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square six-5"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square six-6"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square two-1"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square two-2"></div>
+                            </div>
+                            <div class="grid-cell">
+                                <div class="visual-square one"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="stom-logo-text-container">
-                    <div class="stom-logo-sixtwoone">SIXTWOONE</div>
-                    <div class="stom-logo-mind">Mind</div>
+                    <div class="stom-logo-text">
+                        <div class="stom-logo-sixtwoone">
+                            <span>SIXTWOONE</span>
+                        </div>
+                        <div class="stom-logo-mind">
+                            <span>Mind</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
