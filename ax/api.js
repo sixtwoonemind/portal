@@ -5,7 +5,7 @@
  */
 
 import { getSession, getConversationId, setConversationId } from './auth.js';
-import { WEBHOOKS } from './config.js';
+import { WEBHOOKS, runJob } from './config.js';
 
 /**
  * API Response structure (from contract)
@@ -35,23 +35,13 @@ export async function chat(message, conversationId = 'new') {
     }
 
     try {
-        const response = await fetch(WEBHOOKS.chat.url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${WEBHOOKS.chat.token}`
-            },
-            body: JSON.stringify({
-                message: message.trim(),
-                conversation_id: conversationId,
-                user_id: session.email
-            })
+        const result = await runJob(WEBHOOKS.chat, {
+            message: message.trim(),
+            conversation_id: conversationId,
+            user_id: session.email
         });
 
-        // Parse JSON response
-        const result = await response.json();
-
-        // Extract body from CORS-wrapped response (webhooks return {statusCode, headers, body})
+        // Extract body from CORS-wrapped response if needed
         const unwrapped = result.body || result;
 
         // Check API contract success field

@@ -912,7 +912,7 @@
     <script type="module">
         import { requireAuth, getConversationHistory, addMessageToHistory, clearConversation } from './auth.js';
         import { chat } from './api.js';
-        import { WEBHOOKS } from './config.js';
+        import { WEBHOOKS, runJob } from './config.js';
 
         // Check for session transfer from portal (cross-subdomain session sharing)
         const urlParams = new URLSearchParams(window.location.search);
@@ -1234,26 +1234,13 @@
                 if (!session || !session.email) return;
 
                 // Call Windmill webhook to list conversations
-                const response = await fetch(WEBHOOKS.listConversations.url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${WEBHOOKS.listConversations.token}`
-                    },
-                    body: JSON.stringify({
-                        supabase: "$res:f/ax/supabase-ax",
-                        user_id: session.email,
-                        bot_id: 'ax',
-                        include_archived: false
-                    })
+                const result = await runJob(WEBHOOKS.listConversations, {
+                    supabase: "$res:f/ax/supabase-ax",
+                    user_id: session.email,
+                    bot_id: 'ax',
+                    include_archived: false
                 });
 
-                if (!response.ok) {
-                    console.error('Failed to load conversations');
-                    return;
-                }
-
-                const result = await response.json();
                 // Extract body from CORS-wrapped response
                 const data = result.body || result;
                 conversations = data.conversations || [];
@@ -1322,26 +1309,13 @@
 
             // Load conversation items from OpenAI
             try {
-                const response = await fetch(WEBHOOKS.getConversationItems.url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${WEBHOOKS.getConversationItems.token}`
-                    },
-                    body: JSON.stringify({
-                        openai: "$res:f/ax/openai-ax",
-                        conversation_id: conversationId,
-                        limit: 100,
-                        order: 'asc'
-                    })
+                const result = await runJob(WEBHOOKS.getConversationItems, {
+                    openai: "$res:f/ax/openai-ax",
+                    conversation_id: conversationId,
+                    limit: 100,
+                    order: 'asc'
                 });
 
-                if (!response.ok) {
-                    console.error('Failed to load conversation items');
-                    return;
-                }
-
-                const result = await response.json();
                 // Extract body from CORS-wrapped response
                 const data = result.body || result;
                 const messages = data.messages || [];
