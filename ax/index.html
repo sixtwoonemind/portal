@@ -912,6 +912,7 @@
     <script type="module">
         import { requireAuth, getConversationHistory, addMessageToHistory, clearConversation } from './auth.js';
         import { chat } from './api.js';
+        import { WEBHOOKS } from './config.js';
 
         // Check for session transfer from portal (cross-subdomain session sharing)
         const urlParams = new URLSearchParams(window.location.search);
@@ -1232,12 +1233,11 @@
                 const session = JSON.parse(localStorage.getItem('stom_session'));
                 if (!session || !session.email) return;
 
-                // Call Windmill API to list conversations
-                const response = await fetch('https://viento.dev.sixtwoone.net/api/w/sixtwoonemind/jobs/run_wait_result/f/ax/list_conversations_api', {
+                // Call Windmill webhook to list conversations
+                const response = await fetch(WEBHOOKS.listConversations.url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${session.session_token}`
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         supabase: "$res:f/ax/supabase-ax",
@@ -1321,12 +1321,10 @@
 
             // Load conversation items from OpenAI
             try {
-                const session = JSON.parse(localStorage.getItem('stom_session'));
-                const response = await fetch('https://viento.dev.sixtwoone.net/api/w/sixtwoonemind/jobs/run_wait_result/f/ax/get_conversation_items_api', {
+                const response = await fetch(WEBHOOKS.getConversationItems.url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${session.session_token}`
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         openai: "$res:f/ax/openai-ax",

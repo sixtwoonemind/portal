@@ -5,8 +5,7 @@
  */
 
 import { getSession, getConversationId, setConversationId } from './auth.js';
-
-const API_BASE_URL = 'https://viento.dev.sixtwoone.net';
+import { WEBHOOKS } from './config.js';
 
 /**
  * API Response structure (from contract)
@@ -36,11 +35,10 @@ export async function chat(message, conversationId = 'new') {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/w/sixtwoonemind/jobs/run_wait_result/f/ax/chat`, {
+        const response = await fetch(WEBHOOKS.chat.url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.session_token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 message: message.trim(),
@@ -52,7 +50,7 @@ export async function chat(message, conversationId = 'new') {
         // Parse JSON response
         const result = await response.json();
 
-        // Extract body from CORS-wrapped response
+        // Extract body from CORS-wrapped response (webhooks return {statusCode, headers, body})
         const unwrapped = result.body || result;
 
         // Check API contract success field
