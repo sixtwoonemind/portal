@@ -959,6 +959,12 @@
         }
 
         function addMessageToUI(message) {
+            // Clear empty state if it exists (first message)
+            const emptyState = messagesContainer.querySelector('.empty-state');
+            if (emptyState) {
+                messagesContainer.innerHTML = '';
+            }
+
             const timeString = formatTime(message.timestamp);
             const messageEl = document.createElement('div');
             messageEl.className = `message ${message.role}`;
