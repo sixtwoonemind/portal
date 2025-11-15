@@ -910,7 +910,7 @@
         function renderSubscriptions() {
             if (subscriptionsData.length === 0) {
                 subscriptionsList.innerHTML = `<div class="empty-state">
-                    <div class="empty-state-icon">📋</div>
+                    <div class="empty-state-icon"></div>
                     <p>No subscriptions for ${currentYear}</p>
                     <p style="font-size: 0.9rem; margin-top: 8px;">Add your first subscription using the form above</p>
                 </div>`;
@@ -928,14 +928,14 @@
                             <span class="subscription-category">${sub.category}</span>
                         </div>
                         <div class="subscription-detail">
-                            💰 ${formatCurrency(sub.monthly_amount)}/mo
+                            ${formatCurrency(sub.monthly_amount)}/mo
                         </div>
                         <div class="subscription-detail">
-                            📅 ${monthNames[sub.start_month]} - ${monthNames[sub.end_month]}
+                            ${monthNames[sub.start_month]} - ${monthNames[sub.end_month]}
                         </div>
                     </div>
                     ${sub.notes ? `<div class="subscription-details" style="margin-top: 8px;">
-                        <div class="subscription-detail">📝 ${sub.notes}</div>
+                        <div class="subscription-detail">${sub.notes}</div>
                     </div>` : ''}
                     <div class="subscription-actions">
                         <button class="btn-small" onclick="editSubscription('${sub.id}')">Edit</button>
