@@ -19,6 +19,25 @@ const WEBHOOK_TOKENS = {
 const SESSION_KEY = 'stom_session';
 
 /**
+ * Detect if running in production environment
+ * @returns {boolean}
+ */
+function isProductionEnvironment() {
+    const hostname = window.location.hostname;
+    return hostname === 'sixtwoonemind.com' || hostname === 'www.sixtwoonemind.com';
+}
+
+/**
+ * Get appropriate Supabase resource based on environment
+ * @returns {string} Supabase resource identifier
+ */
+function getSupabaseResource() {
+    return isProductionEnvironment()
+        ? '$res:f/ax/supabase-ax'           // Production database
+        : '$res:f/ax/supabase-ax-staging';  // Staging database
+}
+
+/**
  * Detect Relying Party ID based on current hostname
  * @returns {string} RP ID for WebAuthn (domain without protocol/path)
  */
@@ -153,7 +172,9 @@ function base64URLToBuffer(base64url) {
 export async function registerPasskey(email, name) {
     try {
         const rpId = getRelyingPartyId();
+        const supabaseResource = getSupabaseResource();
         console.log('Passkey registration with RP ID:', rpId);
+        console.log('Using Supabase resource:', supabaseResource);
 
         // Step 1: Get registration options from server
         const optionsResponse = await fetch(`${API_BASE_URL}/passkey_register_options`, {
@@ -165,7 +186,7 @@ export async function registerPasskey(email, name) {
             body: JSON.stringify({
                 email,
                 name,
-                supabase: "$res:f/ax/supabase-ax",
+                supabase: supabaseResource,
                 rp_id: rpId
             })
         });
@@ -222,7 +243,7 @@ export async function registerPasskey(email, name) {
                         attestationObject: bufferToBase64URL(credential.response.attestationObject)
                     }
                 },
-                supabase: "$res:f/ax/supabase-ax",
+                supabase: supabaseResource,
                 rp_id: rpId
             })
         });
@@ -258,7 +279,9 @@ export async function registerPasskey(email, name) {
 export async function authenticatePasskey() {
     try {
         const rpId = getRelyingPartyId();
+        const supabaseResource = getSupabaseResource();
         console.log('Passkey authentication with RP ID:', rpId);
+        console.log('Using Supabase resource:', supabaseResource);
 
         // Step 1: Get authentication options from server
         const optionsResponse = await fetch(`${API_BASE_URL}/passkey_authenticate_options`, {
@@ -268,7 +291,7 @@ export async function authenticatePasskey() {
                 'Authorization': `Bearer ${WEBHOOK_TOKENS.passkey_authenticate_options}`
             },
             body: JSON.stringify({
-                supabase: "$res:f/ax/supabase-ax",
+                supabase: supabaseResource,
                 rp_id: rpId
             })
         });
@@ -325,7 +348,7 @@ export async function authenticatePasskey() {
                             bufferToBase64URL(assertion.response.userHandle) : null
                     }
                 },
-                supabase: "$res:f/ax/supabase-ax",
+                supabase: supabaseResource,
                 rp_id: rpId
             })
         });
@@ -366,6 +389,7 @@ export async function signOut() {
     // Notify server (best effort - don't throw if fails)
     if (session?.session_token) {
         try {
+            const supabaseResource = getSupabaseResource();
             await fetch(`${API_BASE_URL}/signout`, {
                 method: 'POST',
                 headers: {
@@ -374,7 +398,7 @@ export async function signOut() {
                 },
                 body: JSON.stringify({
                     session_token: session.session_token,
-                    supabase: "$res:f/ax/supabase-ax"
+                    supabase: supabaseResource
                 })
             });
         } catch (error) {
