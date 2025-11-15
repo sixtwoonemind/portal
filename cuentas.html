@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuentas - SixTwoOne Mind</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light theme (default) */
+            --bg-primary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-input: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+
+            /* Logo colors - positions [1-9] */
+            --purple-dark: #7c3aed;
+            --purple-base: #8b5cf6;
+            --purple-light: #a855f7;
+            --orange-base: #FFA500;
+            --orange-dark: #FF8C00;
+            --orange-light: #FF7F00;
+            --magenta-base: #E891D4;
+            --magenta-dark: #db2777;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f0f0f;
+            --bg-card: #1a1a1a;
+            --bg-input: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        /* Nav Bar */
+        .nav-bar {
+            width: 100%;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+
+        .nav-content {
+            max-width: 75%;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo link styling */
+        .logo-link {
+            text-decoration: none;
+            display: flex;
+            align-items: flex-start;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.8;
+        }
+
+        /* STOM Logo Component - Canonical Structure */
+        .stom-logo-wrapper {
+            font-size: 20px;
+        }
+
+        .stom-logo {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+
+        .stom-logo-icon {
+            flex: 0 0 auto;
+            width: 3.15rem;
+            height: 3.15rem;
+        }
+
+        .icon-grid {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .grid-cell {
+            flex: 0 0 33.333%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-square {
+            width: 80%;
+            height: 80%;
+            border-radius: 10%;
+            position: relative;
+        }
+
+        .visual-square::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 33%;
+            height: 33%;
+            background: var(--bg-primary);
+            border-radius: 50%;
+        }
+
+        /* Six color - foundational */
+        .six-1, .six-3, .six-5 {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+        }
+
+        .six-2, .six-4, .six-6 {
+            background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+        }
+
+        /* Two color - transition */
+        .two-1 {
+            background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+        }
+
+        .two-2 {
+            background: linear-gradient(135deg, #FF7F00 0%, #FF6347 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+        }
+
+        /* One color - accent */
+        .one {
+            background: linear-gradient(135deg, #E891D4 0%, #db2777 100%);
+            box-shadow: 0.05rem 0.1rem 0.2rem rgba(0, 0, 0, 0.3);
+        }
+
+        .stom-logo-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .stom-logo-sixtwoone {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-top: 0.2rem;
+        }
+
+        .stom-logo-sixtwoone span {
+            font-size: 1.4rem;
+            font-weight: 400;
+            letter-spacing: 0.1rem;
+            line-height: 1;
+            background: linear-gradient(45deg, #E891D4 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: #E891D4;
+        }
+
+        .stom-logo-mind {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .stom-logo-mind span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05rem;
+            line-height: 1;
+            color: var(--text-primary);
+        }
+
+        /* Nav Controls */
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-input);
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-card);
+            border-color: var(--purple-base);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 75%;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, var(--orange-base) 0%, var(--magenta-base) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .year-selector {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .year-selector:hover {
+            border-color: var(--orange-base);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--orange-base);
+            box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-button {
+            width: 100%;
+            background: linear-gradient(90deg, var(--orange-dark) 0%, var(--orange-base) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-button:active {
+            transform: translateY(0);
+        }
+
+        .form-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-button.secondary {
+            background: var(--bg-input);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            box-shadow: none;
+        }
+
+        .form-button.secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--orange-base);
+        }
+
+        /* Totals Display */
+        .totals-card {
+            position: sticky;
+            top: 25px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .total-row:last-child {
+            border-bottom: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid var(--border);
+        }
+
+        .total-label {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .total-amount {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .total-row:last-child .total-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .total-row:last-child .total-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--orange-base) 0%, var(--magenta-base) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Subscriptions List */
+        .subscriptions-list {
+            margin-top: 32px;
+        }
+
+        .subscription-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .subscription-item:hover {
+            border-color: var(--orange-base);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .subscription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .subscription-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .subscription-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--orange-base);
+        }
+
+        .subscription-details {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .subscription-detail {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .subscription-category {
+            background: linear-gradient(90deg, var(--orange-base) 0%, var(--magenta-base) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+
+        .subscription-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-small:hover {
+            background: var(--bg-input);
+            border-color: var(--orange-base);
+        }
+
+        .btn-delete {
+            color: #dc2626;
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+
+        .btn-delete:hover {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: #dc2626;
+        }
+
+        /* Messages */
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .message.visible {
+            display: block;
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #dc2626;
+        }
+
+        .message.success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #16a34a;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="nav-content">
+            <!-- STOM Logo (Canonical Structure) -->
+            <a href="/dashboard.html" class="logo-link" aria-label="Go to dashboard">
+                <div class="stom-logo-wrapper">
+                    <div class="stom-logo">
+                        <div class="stom-logo-icon">
+                            <div class="icon-grid">
+                                <div class="grid-cell">
+                                    <div class="visual-square six-1"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-2"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-3"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-4"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-5"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square six-6"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square two-1"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square two-2"></div>
+                                </div>
+                                <div class="grid-cell">
+                                    <div class="visual-square one"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stom-logo-text">
+                            <div class="stom-logo-sixtwoone">
+                                <span>SIXTWOONE</span>
+                            </div>
+                            <div class="stom-logo-mind">
+                                <span>Mind</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Nav Controls -->
+            <div class="nav-controls">
+                <a href="/dashboard.html" class="nav-link">Dashboard</a>
+                <button class="theme-toggle" id="themeToggle">
+                    <span id="themeLabel">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Cuentas</h1>
+            <div class="page-subtitle">
+                <span>Business expense tracking for</span>
+                <select class="year-selector" id="yearSelector">
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Add/Edit Subscription Form -->
+            <div class="card">
+                <h2 class="card-title" id="formTitle">Add Subscription</h2>
+
+                <div class="message error" id="errorMessage"></div>
+                <div class="message success" id="successMessage"></div>
+
+                <form id="subscriptionForm">
+                    <input type="hidden" id="subscriptionId" name="subscription_id">
+
+                    <div class="form-group">
+                        <label class="form-label" for="name">Service Name</label>
+                        <input type="text" class="form-input" id="name" name="name" required placeholder="e.g., ChatGPT Pro">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="monthlyAmount">Monthly Amount ($)</label>
+                            <input type="number" class="form-input" id="monthlyAmount" name="monthly_amount" required step="0.01" min="0.01" placeholder="20.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="category">Category</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="">Select category...</option>
+                                <option value="Software/SaaS">Software/SaaS</option>
+                                <option value="Internet/Phone">Internet/Phone</option>
+                                <option value="Cloud Services">Cloud Services</option>
+                                <option value="Professional Services">Professional Services</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="startMonth">Start Month</label>
+                            <select class="form-select" id="startMonth" name="start_month" required>
+                                <option value="">Select...</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="endMonth">End Month</label>
+                            <select class="form-select" id="endMonth" name="end_month" required>
+                                <option value="">Select...</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="notes">Notes (optional)</label>
+                        <textarea class="form-input form-textarea" id="notes" name="notes" placeholder="Additional details..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <button type="button" class="form-button secondary" id="cancelButton" style="display: none;">Cancel</button>
+                        <button type="submit" class="form-button" id="submitButton">Add Subscription</button>
+                    </div>
+                </form>
+
+                <!-- Subscriptions List -->
+                <div class="subscriptions-list">
+                    <div class="loading" id="loadingState">Loading subscriptions...</div>
+                    <div id="subscriptionsList"></div>
+                </div>
+            </div>
+
+            <!-- Totals Card -->
+            <div class="card totals-card">
+                <h2 class="card-title">Totals by Category</h2>
+                <div id="totalsDisplay">
+                    <div class="loading">Calculating...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { requireAuth, getSession } from './auth.js';
+
+        // Require authentication
+        requireAuth();
+
+        // Get session
+        const session = getSession();
+        if (!session) {
+            window.location.href = '/login.html';
+        }
+
+        // Windmill API configuration
+        const API_BASE = 'https://api.sixtwoonemind.com/api/w/sixtwoonemind/jobs/run_wait_result/p/f/cuentas/expenses';
+        const WEBHOOK_TOKENS = {
+            save: 'YOUR_SAVE_SUBSCRIPTION_TOKEN',
+            get: 'YOUR_GET_SUBSCRIPTIONS_TOKEN',
+            delete: 'YOUR_DELETE_SUBSCRIPTION_TOKEN'
+        };
+
+        // Theme management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeLabel = document.getElementById('themeLabel');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            themeLabel.textContent = 'Light Mode';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeLabel.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        });
+
+        // State management
+        let currentYear = 2025;
+        let editingId = null;
+        let subscriptionsData = [];
+
+        // DOM elements
+        const yearSelector = document.getElementById('yearSelector');
+        const subscriptionForm = document.getElementById('subscriptionForm');
+        const formTitle = document.getElementById('formTitle');
+        const submitButton = document.getElementById('submitButton');
+        const cancelButton = document.getElementById('cancelButton');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loadingState = document.getElementById('loadingState');
+        const subscriptionsList = document.getElementById('subscriptionsList');
+        const totalsDisplay = document.getElementById('totalsDisplay');
+
+        // Month names for display
+        const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        // Year selector
+        yearSelector.value = currentYear;
+        yearSelector.addEventListener('change', (e) => {
+            currentYear = parseInt(e.target.value);
+            loadSubscriptions();
+        });
+
+        // Message display helpers
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('visible');
+            successMessage.classList.remove('visible');
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.classList.add('visible');
+            errorMessage.classList.remove('visible');
+            setTimeout(() => {
+                successMessage.classList.remove('visible');
+            }, 3000);
+        }
+
+        function hideMessages() {
+            errorMessage.classList.remove('visible');
+            successMessage.classList.remove('visible');
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(amount);
+        }
+
+        // Load subscriptions from API
+        async function loadSubscriptions() {
+            loadingState.style.display = 'block';
+            subscriptionsList.innerHTML = '';
+            totalsDisplay.innerHTML = '<div class="loading">Calculating...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/get_subscriptions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${WEBHOOK_TOKENS.get}`
+                    },
+                    body: JSON.stringify({
+                        year: currentYear,
+                        session_token: session.session_token,
+                        supabase: "$res:f/ax/supabase-ax"
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error?.message || 'Failed to load subscriptions');
+                }
+
+                subscriptionsData = data.data.subscriptions || [];
+                renderSubscriptions();
+                renderTotals(data.data.totals_by_category, data.data.grand_total);
+
+            } catch (error) {
+                console.error('Load error:', error);
+                subscriptionsList.innerHTML = `<div class="empty-state">
+                    <div class="empty-state-icon">⚠️</div>
+                    <p>Failed to load subscriptions</p>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">${error.message}</p>
+                </div>`;
+            } finally {
+                loadingState.style.display = 'none';
+            }
+        }
+
+        // Render subscriptions list
+        function renderSubscriptions() {
+            if (subscriptionsData.length === 0) {
+                subscriptionsList.innerHTML = `<div class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <p>No subscriptions for ${currentYear}</p>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">Add your first subscription using the form above</p>
+                </div>`;
+                return;
+            }
+
+            subscriptionsList.innerHTML = subscriptionsData.map(sub => `
+                <div class="subscription-item">
+                    <div class="subscription-header">
+                        <div class="subscription-name">${sub.name}</div>
+                        <div class="subscription-amount">${formatCurrency(sub.total_cost)}</div>
+                    </div>
+                    <div class="subscription-details">
+                        <div class="subscription-detail">
+                            <span class="subscription-category">${sub.category}</span>
+                        </div>
+                        <div class="subscription-detail">
+                            💰 ${formatCurrency(sub.monthly_amount)}/mo
+                        </div>
+                        <div class="subscription-detail">
+                            📅 ${monthNames[sub.start_month]} - ${monthNames[sub.end_month]}
+                        </div>
+                    </div>
+                    ${sub.notes ? `<div class="subscription-details" style="margin-top: 8px;">
+                        <div class="subscription-detail">📝 ${sub.notes}</div>
+                    </div>` : ''}
+                    <div class="subscription-actions">
+                        <button class="btn-small" onclick="editSubscription('${sub.id}')">Edit</button>
+                        <button class="btn-small btn-delete" onclick="deleteSubscription('${sub.id}', '${sub.name}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render totals
+        function renderTotals(categoryTotals, grandTotal) {
+            const totalsHtml = Object.entries(categoryTotals)
+                .map(([category, amount]) => `
+                    <div class="total-row">
+                        <div class="total-label">${category}</div>
+                        <div class="total-amount">${formatCurrency(amount)}</div>
+                    </div>
+                `)
+                .join('');
+
+            totalsDisplay.innerHTML = `
+                ${totalsHtml}
+                <div class="total-row">
+                    <div class="total-label">Grand Total</div>
+                    <div class="total-amount">${formatCurrency(grandTotal)}</div>
+                </div>
+            `;
+        }
+
+        // Form submission
+        subscriptionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+
+            const formData = new FormData(subscriptionForm);
+            const subscription = {
+                year: currentYear,
+                name: formData.get('name'),
+                monthly_amount: parseFloat(formData.get('monthly_amount')),
+                start_month: parseInt(formData.get('start_month')),
+                end_month: parseInt(formData.get('end_month')),
+                category: formData.get('category'),
+                notes: formData.get('notes') || null
+            };
+
+            if (editingId) {
+                subscription.subscription_id = editingId;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = editingId ? 'Updating...' : 'Adding...';
+
+            try {
+                const response = await fetch(`${API_BASE}/save_subscription`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${WEBHOOK_TOKENS.save}`
+                    },
+                    body: JSON.stringify({
+                        subscription,
+                        session_token: session.session_token,
+                        supabase: "$res:f/ax/supabase-ax"
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error?.message || 'Failed to save subscription');
+                }
+
+                showSuccess(editingId ? 'Subscription updated successfully' : 'Subscription added successfully');
+                resetForm();
+                loadSubscriptions();
+
+            } catch (error) {
+                console.error('Save error:', error);
+                showError(error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = editingId ? 'Update Subscription' : 'Add Subscription';
+            }
+        });
+
+        // Edit subscription
+        window.editSubscription = function(id) {
+            const sub = subscriptionsData.find(s => s.id === id);
+            if (!sub) return;
+
+            editingId = id;
+            document.getElementById('name').value = sub.name;
+            document.getElementById('monthlyAmount').value = sub.monthly_amount;
+            document.getElementById('startMonth').value = sub.start_month;
+            document.getElementById('endMonth').value = sub.end_month;
+            document.getElementById('category').value = sub.category;
+            document.getElementById('notes').value = sub.notes || '';
+
+            formTitle.textContent = 'Edit Subscription';
+            submitButton.textContent = 'Update Subscription';
+            cancelButton.style.display = 'block';
+
+            // Scroll to form
+            subscriptionForm.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // Delete subscription
+        window.deleteSubscription = async function(id, name) {
+            if (!confirm(`Delete "${name}"?`)) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/delete_subscription`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${WEBHOOK_TOKENS.delete}`
+                    },
+                    body: JSON.stringify({
+                        subscription_id: id,
+                        session_token: session.session_token,
+                        supabase: "$res:f/ax/supabase-ax"
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error(data.error?.message || 'Failed to delete subscription');
+                }
+
+                showSuccess('Subscription deleted successfully');
+                loadSubscriptions();
+
+            } catch (error) {
+                console.error('Delete error:', error);
+                showError(error.message);
+            }
+        };
+
+        // Cancel edit
+        cancelButton.addEventListener('click', resetForm);
+
+        function resetForm() {
+            editingId = null;
+            subscriptionForm.reset();
+            formTitle.textContent = 'Add Subscription';
+            submitButton.textContent = 'Add Subscription';
+            cancelButton.style.display = 'none';
+            hideMessages();
+        }
+
+        // Initial load
+        loadSubscriptions();
+    </script>
+</body>
+</html>
