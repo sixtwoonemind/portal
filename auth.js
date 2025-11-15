@@ -19,6 +19,28 @@ const WEBHOOK_TOKENS = {
 const SESSION_KEY = 'stom_session';
 
 /**
+ * Detect Relying Party ID based on current hostname
+ * @returns {string} RP ID for WebAuthn (domain without protocol/path)
+ */
+function getRelyingPartyId() {
+    const hostname = window.location.hostname;
+
+    // Production domains
+    if (hostname === 'sixtwoonemind.com' || hostname === 'www.sixtwoonemind.com') {
+        return 'sixtwoonemind.com';
+    }
+
+    // Cloudflare Pages preview domains (*.portal-ar3.pages.dev)
+    if (hostname.endsWith('.portal-ar3.pages.dev')) {
+        return hostname;
+    }
+
+    // Default to production
+    console.warn('Unknown hostname for WebAuthn:', hostname, '- defaulting to sixtwoonemind.com');
+    return 'sixtwoonemind.com';
+}
+
+/**
  * Session object structure
  * @typedef {Object} Session
  * @property {string} user_id - User identifier
@@ -130,6 +152,9 @@ function base64URLToBuffer(base64url) {
  */
 export async function registerPasskey(email, name) {
     try {
+        const rpId = getRelyingPartyId();
+        console.log('Passkey registration with RP ID:', rpId);
+
         // Step 1: Get registration options from server
         const optionsResponse = await fetch(`${API_BASE_URL}/passkey_register_options`, {
             method: 'POST',
@@ -140,7 +165,8 @@ export async function registerPasskey(email, name) {
             body: JSON.stringify({
                 email,
                 name,
-                supabase: "$res:f/ax/supabase-ax"
+                supabase: "$res:f/ax/supabase-ax",
+                rp_id: rpId
             })
         });
 
@@ -196,7 +222,8 @@ export async function registerPasskey(email, name) {
                         attestationObject: bufferToBase64URL(credential.response.attestationObject)
                     }
                 },
-                supabase: "$res:f/ax/supabase-ax"
+                supabase: "$res:f/ax/supabase-ax",
+                rp_id: rpId
             })
         });
 
@@ -230,6 +257,9 @@ export async function registerPasskey(email, name) {
  */
 export async function authenticatePasskey() {
     try {
+        const rpId = getRelyingPartyId();
+        console.log('Passkey authentication with RP ID:', rpId);
+
         // Step 1: Get authentication options from server
         const optionsResponse = await fetch(`${API_BASE_URL}/passkey_authenticate_options`, {
             method: 'POST',
@@ -238,7 +268,8 @@ export async function authenticatePasskey() {
                 'Authorization': `Bearer ${WEBHOOK_TOKENS.passkey_authenticate_options}`
             },
             body: JSON.stringify({
-                supabase: "$res:f/ax/supabase-ax"
+                supabase: "$res:f/ax/supabase-ax",
+                rp_id: rpId
             })
         });
 
@@ -294,7 +325,8 @@ export async function authenticatePasskey() {
                             bufferToBase64URL(assertion.response.userHandle) : null
                     }
                 },
-                supabase: "$res:f/ax/supabase-ax"
+                supabase: "$res:f/ax/supabase-ax",
+                rp_id: rpId
             })
         });
 
