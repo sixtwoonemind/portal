@@ -770,13 +770,24 @@
             window.location.href = '/login.html';
         }
 
+        // Environment detection
+        const isProduction = window.location.hostname === 'sixtwoonemind.com' ||
+                            window.location.hostname === 'www.sixtwoonemind.com';
+        const SUPABASE_RESOURCE = isProduction
+            ? '$res:f/ax/supabase-ax'           // Production database
+            : '$res:f/ax/supabase-ax-staging';  // Staging database for preview deployments
+
         // Windmill API configuration
         const API_BASE = 'https://api.sixtwoonemind.com/api/w/sixtwoonemind/jobs/run_wait_result/p/f/cuentas/expenses';
         const WEBHOOK_TOKENS = {
-            save: 'YOUR_SAVE_SUBSCRIPTION_TOKEN',
-            get: 'YOUR_GET_SUBSCRIPTIONS_TOKEN',
-            delete: 'YOUR_DELETE_SUBSCRIPTION_TOKEN'
+            save: 'msJxhisUK2kib9pipikntU8eAyuoV4mU',
+            get: 'JBtioUe1n7YRZQ2s4DS6ji3zGwO3tbwB',
+            delete: 'RT4fzGFw5EGutOsW0YcJbf1of7SNhPnw'
         };
+
+        // Log environment for debugging
+        console.log(`Environment: ${isProduction ? 'Production' : 'Preview/Staging'}`);
+        console.log(`Supabase Resource: ${SUPABASE_RESOURCE}`);
 
         // Theme management
         const themeToggle = document.getElementById('themeToggle');
@@ -869,7 +880,7 @@
                     body: JSON.stringify({
                         year: currentYear,
                         session_token: session.session_token,
-                        supabase: "$res:f/ax/supabase-ax"
+                        supabase: SUPABASE_RESOURCE
                     })
                 });
 
@@ -987,7 +998,7 @@
                     body: JSON.stringify({
                         subscription,
                         session_token: session.session_token,
-                        supabase: "$res:f/ax/supabase-ax"
+                        supabase: SUPABASE_RESOURCE
                     })
                 });
 
@@ -1045,7 +1056,7 @@
                     body: JSON.stringify({
                         subscription_id: id,
                         session_token: session.session_token,
-                        supabase: "$res:f/ax/supabase-ax"
+                        supabase: SUPABASE_RESOURCE
                     })
                 });
 
